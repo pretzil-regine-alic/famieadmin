@@ -1,0 +1,22 @@
+.MainDash-container {
+    display: flex;
+    gap: 20px; /* Adds spacing between the panels */
+    padding: 20px;
+    width: 155vh; /* Full width of the container */
+  }
+  
+  .left-panel {
+    flex: 1; /* Both panels should take equal space */
+  }
+  
+  .right-panel {
+    flex: 1;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 40rem;
+  }
+  

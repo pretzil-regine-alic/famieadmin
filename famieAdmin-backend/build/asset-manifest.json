@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0533785c.css",
+    "main.js": "/static/js/main.dc699f08.js",
+    "static/media/famielogo1.png": "/static/media/famielogo1.fcda840f20bf02b7c30e.png",
+    "static/media/logo.png": "/static/media/logo.fcda840f20bf02b7c30e.png",
+    "index.html": "/index.html",
+    "main.0533785c.css.map": "/static/css/main.0533785c.css.map",
+    "main.dc699f08.js.map": "/static/js/main.dc699f08.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0533785c.css",
+    "static/js/main.dc699f08.js"
+  ]
+}

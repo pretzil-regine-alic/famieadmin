@@ -1,0 +1,120 @@
+/* General container styling */
+.users-container {
+  display: grid;
+  width: 58rem;
+  height: 30rem;
+  max-width: 100rem;
+  grid-gap: 20px;
+  padding: 20px;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid #B8e2a3;
+  box-shadow: 0px 0px 10px rgba(27, 25, 25, 0.1);
+  margin-left: 4rem;
+  margin-bottom: 2rem;
+}
+
+.table-container {
+  max-height: 355px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0px;
+  margin-bottom: 50px;
+}
+
+.users-table thead {
+  position: sticky;
+  top: 0;
+  background-color: #B8e2a3; /* Keep header background visible when scrolling */
+  z-index: 1; /* Ensure it stays on top of the rest of the table */
+}
+
+.users-table th, .users-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.users-table th {
+  background-color: #B8e2a3;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.users-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.users-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 50rem;
+}
+
+/* Form-group styling for input fields */
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background-color: transparent;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3f51b5; /* Change border color when focused */
+}
+
+.form-group input::placeholder {
+  color: #aaa;
+  opacity: 1;
+}
+
+.form-group label {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  font-size: 16px;
+  color: #aaa;
+  pointer-events: none;
+  background-color: white;
+  padding: 0 5px;
+  transition: all 0.2s ease-out;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group select:focus + label,
+.form-group select:valid + label {
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  color: black;
+  padding: 0 4px;
+  background-color: white;
+}
+
+.form-group input:not(:focus) + label,
+.form-group select:not(:focus) + label {
+  color: black;
+}

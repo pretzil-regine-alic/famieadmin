@@ -1,0 +1,53 @@
+.app-list-container {
+    height: 35rem;
+    overflow-y: auto;  
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: none;
+    background-color: white; 
+    border: 2px solid #ccc;
+  }
+  
+  .all-apps-title {
+    font-size: 22px;
+    background-color: #B8e2a3; 
+    padding: 12px;
+    margin: 0;  /* Remove margin to connect title with list */
+    border-radius: 5px 5px 0 0;  /* Rounded corners for the top of the container */
+    position: sticky;  /* Keeps the title fixed during scrolling */
+    top: 0;  /* Ensures the title stays at the top */
+    z-index: 1;  /* Ensures the title is always above the list */
+    border-bottom: 2px solid #ccc;  /* Line below the title */
+  }
+  
+  .app-list {
+    list-style-type: circle;
+    padding: 10px;
+    margin: 0;
+    background-color: white;  /* Same background color as the title */
+    border-radius: 0 0 5px 5px;  /* Rounded corners for the bottom of the container */
+    border-top: 2px solid #ccc;  /* Line separating the title and list */
+  }
+  
+  .app-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 0;
+    background-color: transparent; /* Keep list items transparent */
+    color: #333;
+    font-size: 16px;
+    box-shadow: none; 
+    border-bottom: 1px solid #ccc; 
+    transition: none; 
+  }
+  
+  .app-list li:last-child {
+    margin-bottom: 0; 
+    border-bottom: none; 
+  }
+  
+  .app-list li:hover {
+    background-color: transparent;  
+    cursor: default;
+  }
+  

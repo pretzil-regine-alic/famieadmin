@@ -1,0 +1,26 @@
+.UsersDash {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    margin-left: 1rem; /* Adjusted margin-left */
+}
+
+.theme-title {
+    margin-left: 1rem; /* Adjusted margin-left for the title */
+    font-size: 2rem; /* Adjust the font size as necessary */
+    white-space: nowrap; /* Ensure the text stays on one line */
+}
+
+@media screen and (max-width: 1200px) {
+    .UsersDash {
+        justify-content: flex-start;
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .UsersDash {
+        align-items: center;
+    }
+}
