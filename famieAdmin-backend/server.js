@@ -10,7 +10,7 @@ const app = express();
 const corsOptions = {
   origin: process.env.FRONTEND_URL, // Ensure this is defined in your .env
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
@@ -27,9 +27,10 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch((err) => console.error('MongoDB connection error:', err));
 
 // Import Mongoose models
 const AppManagement = require('./models/AppManagement');
@@ -45,12 +46,12 @@ const appTimeManagementRoutes = require('./routes/app_time_management');
 const allAppManagementRoutes = require('./routes/AppListroutes');
 
 // Use Routes
-app.use('/api/admin', adminRoutes); 
-app.use('/api/users', usersRoutes); 
-app.use('/api', userthemeRoutes); 
-app.use('/api/app_management', appManagementRoutes); 
+app.use('/api/admin', adminRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api', userthemeRoutes);
+app.use('/api/app_management', appManagementRoutes);
 app.use('/api/app_time_management', appTimeManagementRoutes);
-app.use('/api/all_app_management', allAppManagementRoutes); 
+app.use('/api/all_app_management', allAppManagementRoutes);
 
 // Serve static files from the React app build directory (frontend)
 app.use(express.static(path.join(__dirname, '../famieAdmin-frontend/build')));
@@ -68,7 +69,7 @@ app.get('*', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).json({ error: 'Something broke!' }); // Changed to return JSON for better client handling
 });
 
 // Start the server
