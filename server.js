@@ -20,10 +20,10 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 // Log MongoDB URI for debugging (ensure this is removed in production)
-console.log('MongoDB URI:', process.env.MONGO_URI);
+console.log('MongoDB URI:', process.env.MONGODB_URI); // Ensure consistency in environment variable name
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => {
     console.error('Failed to connect to MongoDB:', err);
