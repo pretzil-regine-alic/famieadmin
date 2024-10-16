@@ -8,10 +8,11 @@ const app = express();
 
 // Configure CORS - allowing requests from your frontend URL
 const corsOptions = {
-  origin: ['https://adminfrontend-b5aa85f07c03.herokuapp.com'], // Add your frontend's Heroku URL here
+  origin: [process.env.FRONTEND_URL], // Using environment variable for frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 app.use(cors(corsOptions));
 
 // Parse incoming requests
@@ -25,7 +26,7 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, {})
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => {
     console.error('Failed to connect to MongoDB:', err);
