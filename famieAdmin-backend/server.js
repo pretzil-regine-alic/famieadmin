@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');  // Importing cors
-const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
@@ -15,16 +14,18 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-
 // Parse incoming requests
-app.use(bodyParser.json());
 app.use(express.json());
-
 
 const mongoURI = process.env.MONGODB_URI;
 
+if (!mongoURI) {
+  console.error('MONGODB_URI is not defined in .env file');
+  process.exit(1);
+}
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {})
+mongoose.connect(mongoURI, {})
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => {
     console.error('Failed to connect to MongoDB:', err);
@@ -63,6 +64,12 @@ app.get('/api/some-endpoint', (req, res) => {
 // Catch-all handler for any other routes to serve React frontend
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../famieAdmin-frontend/build', 'index.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 // Start the server
