@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');  // Importing cors
+const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
@@ -8,7 +8,7 @@ const app = express();
 
 // Configure CORS - allowing requests from your frontend URL
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL], // Using environment variable for frontend URL
+  origin: process.env.FRONTEND_URL, // Make sure this is defined in your .env
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
@@ -26,12 +26,17 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => {
-    console.error('Failed to connect to MongoDB:', err);
-    process.exit(1);
-  });
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => {
+  console.error('Failed to connect to MongoDB:', err);
+  process.exit(1);
+});
 
 // Import Mongoose models
 const AppManagement = require('./models/AppManagement');
@@ -47,12 +52,12 @@ const appTimeManagementRoutes = require('./routes/app_time_management');
 const allAppManagementRoutes = require('./routes/AppListroutes');
 
 // Use Routes
-app.use('/api/admin', adminRoutes); // Admin login and registration
-app.use('/api/users', usersRoutes); // Active users routes
-app.use('/api', userthemeRoutes); // Theme routes
-app.use('/api/app_management', appManagementRoutes); // App management routes
-app.use('/api/app_time_management', appTimeManagementRoutes); // App time management routes
-app.use('/api/all_app_management', allAppManagementRoutes); // All apps management routes
+app.use('/api/admin', adminRoutes); 
+app.use('/api/users', usersRoutes); 
+app.use('/api', userthemeRoutes); 
+app.use('/api/app_management', appManagementRoutes); 
+app.use('/api/app_time_management', appTimeManagementRoutes);
+app.use('/api/all_app_management', allAppManagementRoutes); 
 
 // Serve static files from the React app build directory (frontend)
 app.use(express.static(path.join(__dirname, '../famieAdmin-frontend/build')));
