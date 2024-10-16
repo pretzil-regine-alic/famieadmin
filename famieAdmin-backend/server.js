@@ -8,7 +8,7 @@ const app = express();
 
 // Configure CORS - allowing requests from your frontend URL
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Make sure this is defined in your .env
+  origin: process.env.FRONTEND_URL, // Ensure this is defined in your .env
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
@@ -18,10 +18,11 @@ app.use(cors(corsOptions));
 // Parse incoming requests
 app.use(express.json());
 
-const mongoURI = process.env.MONGO_URI || '<mongodb+srv://famieproject:Thesis1234@cluster1.qbwax.mongodb.net/famie>';
+// Use the MongoDB URI from the .env file, with a fallback to a placeholder if needed
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://famieproject:Thesis1234@cluster1.qbwax.mongodb.net/famie';
 
 if (!mongoURI) {
-  console.error('MONGODB_URI is not defined in .env file');
+  console.error('MONGO_URI is not defined in .env file');
   process.exit(1);
 }
 
@@ -29,8 +30,8 @@ if (!mongoURI) {
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
+  useCreateIndex: true,  // Note: `useCreateIndex` is deprecated in newer versions of mongoose
+  useFindAndModify: false // Note: `useFindAndModify` is deprecated in newer versions of mongoose
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => {
