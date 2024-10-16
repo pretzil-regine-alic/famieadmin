@@ -1,33 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+const cors = require('cors');  // Importing cors
 const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
 const app = express();
 
-// Configure CORS - allowing requests from any origin during development
-// Modify this in production to restrict to your frontend domain
-const allowedOrigins = ['http://localhost:3000', process.env.FRONTEND_URL];  // Add your production frontend URL here
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+// Configure CORS - allowing requests from your frontend URL
+const corsOptions = {
+  origin: ['https://adminfrontend-b5aa85f07c03.herokuapp.com'], // Add your frontend's Heroku URL here
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
 
+// Parse incoming requests
 app.use(bodyParser.json());
 app.use(express.json());
 
 // Log MongoDB URI for debugging (ensure this is removed in production)
-console.log('MongoDB URI:', process.env.MONGO_URI);
+console.log('MongoDB URI:', process.env.MONGODB_URI); // Ensure consistency in environment variable name
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {})
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => {
     console.error('Failed to connect to MongoDB:', err);
@@ -41,35 +37,35 @@ const AppTimeManagement = require('./models/AppTimeManagement');
 
 // Import Routes
 const adminRoutes = require('./routes/adminRoutes');
-const usersRoutes = require('./routes/users');  // For active users
+const usersRoutes = require('./routes/users'); // For active users
 const userthemeRoutes = require('./routes/userthemeRoutes');
 const appManagementRoutes = require('./routes/appManagementRoutes');
 const appTimeManagementRoutes = require('./routes/app_time_management');
 const allAppManagementRoutes = require('./routes/AppListroutes');
 
 // Use Routes
-app.use('/api/admin', adminRoutes);  // Admin login and registration
-app.use('/api/users', usersRoutes);  // Active users routes
-app.use('/api', userthemeRoutes);  // Theme routes
-app.use('/api/app_management', appManagementRoutes);  // App management routes
-app.use('/api/app_time_management', appTimeManagementRoutes);  // App time management routes
-app.use('/api/all_app_management', allAppManagementRoutes);  // All apps management routes
+app.use('/api/admin', adminRoutes); // Admin login and registration
+app.use('/api/users', usersRoutes); // Active users routes
+app.use('/api', userthemeRoutes); // Theme routes
+app.use('/api/app_management', appManagementRoutes); // App management routes
+app.use('/api/app_time_management', appTimeManagementRoutes); // App time management routes
+app.use('/api/all_app_management', allAppManagementRoutes); // All apps management routes
 
 // Serve static files from the React app build directory (frontend)
 app.use(express.static(path.join(__dirname, '../famieAdmin-frontend/build')));
 
-// Catch-all handler for any other routes to serve React frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../famieAdmin-frontend/build/index.html'));
+// Example API route
+app.get('/api/some-endpoint', (req, res) => {
+  res.json({ message: 'Hello from the backend!' });
 });
 
-// Example API route
-app.get('/api/someRoute', (req, res) => {
-  res.json({ message: "Some route working!" });
+// Catch-all handler for any other routes to serve React frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../famieAdmin-frontend/build', 'index.html'));
 });
 
 // Start the server
-const port = process.env.PORT || 5252;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 5252;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
