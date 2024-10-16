@@ -27,17 +27,9 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,  // Note: `useCreateIndex` is deprecated in newer versions of mongoose
-  useFindAndModify: false // Note: `useFindAndModify` is deprecated in newer versions of mongoose
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => {
-  console.error('Failed to connect to MongoDB:', err);
-  process.exit(1);
-});
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Import Mongoose models
 const AppManagement = require('./models/AppManagement');
