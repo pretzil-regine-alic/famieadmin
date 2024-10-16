@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');  // Importing cors
-const bodyParser = require('body-parser');
+const cors = require('cors'); // Importing cors
 const path = require('path');
 require('dotenv').config();
 
@@ -11,19 +10,19 @@ const app = express();
 const corsOptions = {
   origin: ['https://adminfrontend-b5aa85f07c03.herokuapp.com'], // Add your frontend's Heroku URL here
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
 // Parse incoming requests
-app.use(bodyParser.json());
-app.use(express.json());
+app.use(express.json()); // Built-in body parsing
 
 // Log MongoDB URI for debugging (ensure this is removed in production)
-console.log('MongoDB URI:', process.env.MONGODB_URI); // Ensure consistency in environment variable name
+console.log('MongoDB URI:', process.env.MONGODB_URI);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://famieproject:Thesis1234@cluster1.qbwax.mongodb.net/famie';
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => {
     console.error('Failed to connect to MongoDB:', err);
@@ -57,6 +56,12 @@ app.use(express.static(path.join(__dirname, '../famieAdmin-frontend/build')));
 // Example API route
 app.get('/api/some-endpoint', (req, res) => {
   res.json({ message: 'Hello from the backend!' });
+});
+
+// Centralized error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send({ error: 'Something went wrong!' });
 });
 
 // Catch-all handler for any other routes to serve React frontend
