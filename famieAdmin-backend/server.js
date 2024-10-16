@@ -18,7 +18,7 @@ app.use(cors(corsOptions));
 // Parse incoming requests
 app.use(express.json());
 
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = process.env.MONGO_URI || '<mongodb+srv://famieproject:Thesis1234@cluster1.qbwax.mongodb.net/famie>';
 
 if (!mongoURI) {
   console.error('MONGODB_URI is not defined in .env file');
