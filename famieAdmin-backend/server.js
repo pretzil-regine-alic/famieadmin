@@ -69,7 +69,7 @@ app.get('*', (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Something broke!' }); // Changed to return JSON for better client handling
+  res.status(500).json({ error: 'Something broke!' }); 
 });
 
 // Start the server
